@@ -1,0 +1,32 @@
+#include <iostream>
+#include <string.h>
+
+int strContaining(char *a, char *str)
+{
+    int place=-1;
+    int i=0, j=0;
+    i = 0;
+    int a = strlen(str);
+    int b = strlen(a);
+    while (i<a)
+    {
+        if (str[i]==a[0])
+        {
+            place = i;
+            for (j = 1; j < m; j++)
+            {
+                i++;
+                if (str[i] != a[j])
+                {
+                    place = -1;
+                    break;
+                }
+
+            }
+        }
+        i++;
+        if (place != -1)
+            break;
+    }
+    return place;
+}
