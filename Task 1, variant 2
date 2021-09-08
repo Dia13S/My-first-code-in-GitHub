@@ -1,0 +1,60 @@
+//Variant2
+
+//Реализация с применением функции
+#include <iostream>
+#include <string.h>
+#include <Windows.h> 
+
+using namespace std;
+
+void findVariant(char surname[], int number)
+{
+    int lenght = strlen(surname);
+    int variant, sum;
+    sum = 0;
+        sum = (int)surname[0];
+    variant = sum % number + 1;
+    cout << "Variant is : " << variant;
+}
+
+int main()
+{
+    char surname[15];
+    int number;
+    cout << "Inter your surname: ";
+    cin.getline(surname, 15);
+    cout << "\nInter the number of variants: ";
+    cin >> number;
+    findVariant(surname, number);
+    return 0;
+}
+
+
+/*
+
+//Реализация без использования функции
+
+#include <iostream>
+#include <string.h>
+#include <windows.h>
+
+using namespace std;
+
+int main()
+{
+    char surname[15];
+    int number;
+    cout << "Inter your surname: ";
+    cin.getline(surname, 15);
+
+    cout << "Inter number of variants: ";
+    cin >> number;
+
+    int lenght = strlen(surname);
+    int variant, sum;
+    sum = 0;
+    sum = (int)surname[0];
+    variant = sum % number + 1;
+    cout << "Variant is: " << variant;
+}
+*/
