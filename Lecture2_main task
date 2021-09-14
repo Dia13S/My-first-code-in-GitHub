@@ -3,10 +3,10 @@
 
 using namespace std;
 void test_compare(){
-        char* test_string= "We Here";
+        char* test_string= "Here";
         MyString a = MyString(test_string);
         cout << a << endl;
-        MyString b= MyString("We Not Here");
+        MyString b= MyString("Not Here");
         cout << b << endl;
         MyString c = b;
         cout << c << endl;
@@ -15,7 +15,7 @@ void test_compare(){
         cout << c.compare(a) << endl;
 
 }
-void test_init(){  char* test_string= "We Here";
+void test_init(){  char* test_string= "Here";
                    MyString a = MyString(test_string);
                    cout << a << endl;
                    MyString b= MyString("We Not Here");
@@ -64,7 +64,7 @@ int strcontains(char *s2, char *s1)
 
 void test_strstr(){
     cout << strcontains("Hello","el") << endl;
-    cout << strcontains("We Here?","res") << endl;
+    cout << strcontains("Here?","res") << endl;
 
 }
 int main()
