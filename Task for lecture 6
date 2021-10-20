@@ -1,0 +1,50 @@
+#include <iostream>
+
+using namespace std;
+
+class Customer
+{
+    int cash;
+    const char *pName;
+    public:
+        Customer(const char *vName, int vcash): pName(vName), cash(vcash){}
+
+        ~Customer()
+        {
+            delete pName;
+        }
+        void show()
+        {
+            cout << "Name: " << pName << endl;
+            cout << "Cash: " << cash << endl;
+        }
+};
+
+template <class T>
+class SP
+{
+private:
+    T *pData;
+public:
+    SP(T *pVal): pData(pVal){}
+
+    ~SP()
+    {
+        delete pData;
+    }
+    T &operator*()
+    {
+        return *pData;
+    }
+    T *operator->()
+    {
+        return pData;
+    }
+};
+
+int main()
+{
+    SP<Customer> p(new Customer("James", 4500));
+    p->show();
+    return 0;
+}
