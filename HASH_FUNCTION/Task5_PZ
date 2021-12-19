@@ -22,7 +22,7 @@ int hashfunction(string str) {
 
 
 void heshinit(int n, char number) {
-	string forFile = "FUCKING_HASH";
+	string forFile = "HASH_FUNCTION";
 	forFile.push_back(number);
 	forFile + ".txt";
 	ofstream fin(forFile); //чтение
@@ -55,7 +55,7 @@ void heshinit(int n, char number) {
 
 /*
 void heshinitdop(int n, char number) {
-	string forFile = "FUCKING_HASH";
+	string forFile = "HASH_FUNCTION";
 	forFile.push_back(number);
 	forFile + ".txt";
 	ofstream fin; //чтение
@@ -90,7 +90,7 @@ void heshinitdop(int n, char number) {
 */
 
 unsigned long long counter(int n, char number) {
-	string forFile = "FUCKING_HASH";
+	string forFile = "HASH_FUNCTION";
 	forFile.push_back(number);
 	forFile + ".txt";
 	ifstream fin(forFile);
@@ -132,7 +132,7 @@ int isequalhash (int n, string value) {
 
 int isequalstring(string value) {
 
-	string forFile = "FUCKING_HASH";
+	string forFile = "HASH_FUNCTION";
 	forFile.push_back(char(int('0') + value.size()));
 	forFile + ".txt";
 	int key = 0;
