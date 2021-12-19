@@ -1,0 +1,203 @@
+#include <iostream>
+#include <string>
+#include <fstream>
+#include <ctime>
+#include <windows.h>
+using namespace std;
+
+char dod1(int a) {
+	if (a <= 25)
+		return char(int('a') + a);
+	else return char(int('0') + a - 26);
+}
+
+const int m = 99991; //размер хеш таблицы
+
+int hashfunction(string str) {
+	int h = 0;
+	for (int i = 0; i < str.size(); i++)
+		h = (h * 36 + int(str[i])) % m;
+	return h;
+}
+
+
+void heshinit(int n, char number) {
+	string forFile = "FUCKING_HASH";
+	forFile.push_back(number);
+	forFile + ".txt";
+	ofstream fin(forFile); //чтение
+	int maxVal = 35;
+	int* mass;
+	mass = new int[n];
+	mass[0] = -1;
+	for (int j = 1; j < n; j++) {
+		mass[j] = 0;
+	}
+	string s;
+	while (mass[n - 1] != 35 || mass[0] != 35 || mass[1] != 35 || mass[2] != 35 || mass[3] != 35 || mass[4] != 35) {
+		s = "";
+		mass[0]++;
+		for (int i = 0; i < n; i++) {
+			if (mass[i] > maxVal) {
+				if (mass[i] > maxVal) {
+					mass[i] = 0;
+					mass[i + 1]++;
+				}
+			}
+			s.push_back(dod1(mass[i]));
+		}
+		fin << hashfunction(s) << ' ' << s << endl;
+		cout << hashfunction(s) << ' ' << s << endl;
+	}
+	delete[] mass;
+	fin.close();
+}
+
+/*
+void heshinitdop(int n, char number) {
+	string forFile = "FUCKING_HASH";
+	forFile.push_back(number);
+	forFile + ".txt";
+	ofstream fin; //чтение
+	fin.open(forFile, ios::app);
+	int maxVal = 35;
+	int* mass;
+	mass = new int[n];
+	mass[0] = 0;
+	for (int j = 1; j < n-1; j++) {
+		mass[j] = 0;
+	}
+	mass[5] = 35;
+	string s;
+	while (mass[n - 1] != 35 || mass[0] !=35 || mass[1] != 35 || mass[2] != 35 || mass[3] != 35 || mass[4] != 35) {
+		s = "";
+		mass[0]++;
+		for (int i = 0; i < n; i++) {
+			if (mass[i] > maxVal) {
+				if (mass[i] > maxVal) {
+					mass[i] = 0;
+					mass[i + 1]++;
+				}
+			}
+			s.push_back(dod1(mass[i]));
+		}
+		if (mass[n - 1] != 36) fin << hashfunction(s) << ' ' << s << endl;
+		if (mass[n-1] != 36) cout << hashfunction(s) << ' ' << s << endl;
+	}
+	delete[] mass;
+	fin.close();
+}
+*/
+
+unsigned long long counter(int n, char number) {
+	string forFile = "FUCKING_HASH";
+	forFile.push_back(number);
+	forFile + ".txt";
+	ifstream fin(forFile);
+	long long mass[m];
+	unsigned long long key = 0;
+	string s;
+	for (int i = 0; i < m; i++)
+		mass[i] = -1;
+	while (!fin.eof()) {
+		fin >> key >> s;
+		mass[key] = mass[key] + 1;
+	}
+	key = 0;
+	for (int i = 0; i < m; i++) {
+		if (mass[i] != -1)
+			key = key + mass[i];
+	}
+	fin.close();
+	return key;
+}
+
+int isequalhash (int n, string value) {
+
+	string forFile = "FUCKING_HASH";
+	forFile.push_back(char(int('0') + value.size()));
+	forFile + ".txt";
+	int key = 0;
+	string s = "";
+	ifstream fin(forFile);
+	while (!fin.eof()) {
+		fin >> key >> s;
+		if (key == n)
+			if (value == s) break;;
+	}
+
+	fin.close();
+	return 0;
+}
+
+int isequalstring(string value) {
+
+	string forFile = "FUCKING_HASH";
+	forFile.push_back(char(int('0') + value.size()));
+	forFile + ".txt";
+	int key = 0;
+	string s = "";
+	ifstream fin(forFile);
+	while (!fin.eof()) {
+		fin >> key >> s;
+		if (value == s)
+			break;
+	}
+
+	fin.close();
+	return 0;
+}
+
+int main()
+{
+	setlocale(LC_ALL, "rus");
+	heshinit(3, '3');
+	heshinit(4, '4');
+	heshinit(5, '5');
+	cout << "Количество коллизий для строк из 3 символов: " << counter(3, '3') << endl;
+	cout << "Количество коллизий для строк из 4 символов: " << counter(4, '4') << endl;
+	cout << "Количество коллизий для строк из 5 символов: " << counter(5, '5') << endl;
+	cout << "Количество коллизий для строк из 6 символов: " << counter(6, '6') << endl;
+	cout << hashfunction("ad7") << endl;
+	long start = clock();
+	cout << "Сравнение по хешам для строки из 3 элементов: ";
+	isequalhash(hashfunction("zzz"), "zzz");
+	long end = clock();
+	cout << (end - start) << " мс" << endl;
+	start = clock();
+	cout << "Сравнение по строкам для строки из 3 элементов: ";
+	isequalstring("zzz");
+    end = clock();
+	cout << (end - start) << " мс" << endl;
+    start = clock();
+	cout << "Сравнение по хешам для строки из 4 элементов: ";
+	isequalhash(hashfunction("zzzz"), "zzzz");
+	 end = clock();
+	cout << (end - start) << " мс" << endl;
+	 start = clock();
+	cout << "Сравнение по строкам для строки из 4 элементов: ";
+	isequalstring("zzzz");
+	 end = clock();
+	cout << (end - start) << " мс" << endl;
+	 start = clock();
+	cout << "Сравнение по хешам для строки из 5 элементов: ";
+	isequalhash(hashfunction("zzzzz"), "zzzzz");
+	 end = clock();
+	cout << (end - start) << " мс" << endl;
+	start = clock();
+	cout << "Сравнение по строкам для строки из 5 элементов: ";
+	isequalstring("zzzzz");
+	 end = clock();
+	cout << (end - start) << " мс" << endl;
+	start = clock();
+	cout << "Сравнение по хешам для строки из 6 элементов: ";
+	isequalhash(hashfunction("zzzzzz"), "zzzzzz");
+	end = clock();
+	cout << (end - start) << " мс" << endl;
+	start = clock();
+	cout << "Сравнение по строкам для строки из 6 элементов: ";
+	isequalstring("zzzzzz");
+	end = clock();
+	cout << (end - start) << " мс" << endl;
+}
+
